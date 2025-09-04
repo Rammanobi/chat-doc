@@ -1,5 +1,6 @@
 import { ArrowRight, Sun, Mic, Moon } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
+import UploadPopover from './UploadPopover';
 
 const MainPanel = () => {
   const { theme, toggleTheme } = useTheme();
@@ -23,11 +24,12 @@ const MainPanel = () => {
         <h1 className="text-4xl font-bold">Chat DOC – Al Assistant</h1>
       </main>
       <footer className={`p-4 ${theme === 'dark' ? 'border-t border-gray-700' : 'border-t border-gray-200'}`}>
-        <div className="relative">
+        <div className="relative flex items-center">
+          <UploadPopover />
           <input
             type="text"
             placeholder="Type your message"
-            className={`w-full rounded-md p-3 pr-20 ${theme === 'dark' ? 'bg-gray-800' : 'bg-white'}`}
+            className={`w-full rounded-md p-3 pl-12 pr-20 ${theme === 'dark' ? 'bg-gray-800' : 'bg-white'}`}
           />
           <div className="absolute right-3 top-1/2 transform -translate-y-1/2 flex items-center">
             <button className={`p-1 ${theme === 'dark' ? 'text-gray-400 hover:text-white' : 'text-gray-600 hover:text-black'}`}>

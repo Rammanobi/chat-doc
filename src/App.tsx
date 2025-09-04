@@ -1,29 +1,30 @@
-import { useState } from 'react';
-import { useTheme } from './contexts/ThemeContext';
-import useMobile from './hooks/useMobile';
-import Sidebar from "./components/Sidebar";
-import MainPanel from "./components/MainPanel";
-import { Menu } from 'lucide-react';
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
+import LoginPage from "./pages/LoginPage";
+import ChatPage from "./pages/ChatPage";
+import ProtectedRoute from "./components/ProtectedRoute";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: (
+      <ProtectedRoute>
+        <ChatPage />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/login",
+    element: <LoginPage />,
+  },
+]);
+
 
 function App() {
-  const { theme } = useTheme();
-  const isMobile = useMobile();
-  const [isSidebarOpen, setSidebarOpen] = useState(!isMobile);
-
-  const toggleSidebar = () => {
-    setSidebarOpen(!isSidebarOpen);
-  };
-
   return (
-    <div className={`flex h-screen ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'}`}>
-      {isMobile && (
-        <button onClick={toggleSidebar} className="absolute top-4 left-4 z-20">
-          <Menu size={24} />
-        </button>
-      )}
-      <Sidebar isOpen={isSidebarOpen} />
-      <MainPanel />
-    </div>
+    <RouterProvider router={router} />
   );
 }
 

@@ -30,3 +30,6 @@ dist-ssr
 # Envs
 .env
 .env*.local
+
+# Firebase
+src/firebase.ts
