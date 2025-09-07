@@ -1,11 +1,25 @@
 [
   {
-    "origin": ["*"],
-    "method": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    "responseHeader": [
-      "Content-Type",
-      "Access-Control-Allow-Origin"
-    ],
-    "maxAgeSeconds": 3600
+      "maxAgeSeconds": 3600,
+      "method": [
+          "GET",
+          "POST",
+          "PUT",
+          "DELETE",
+          "OPTIONS"
+      ],
+      "origin": [
+          "http://localhost:5173",
+          "http://localhost:5174",
+          "http://localhost:5175",
+          "http://localhost:5176",
+          "http://localhost:4173",
+          "https://chat--doc--1.web.app",
+          "https://chat--doc--1.firebaseapp.com"
+      ],
+      "responseHeader": [
+          "Content-Type",
+          "Authorization"
+      ]
   }
 ]

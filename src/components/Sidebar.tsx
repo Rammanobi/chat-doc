@@ -1,8 +1,9 @@
-import { Plus, Clock, Settings, User, LogOut } from 'lucide-react';
+import { Plus, Clock, User, LogOut } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 import { useAuth } from '../contexts/AuthContext';
 import { auth } from '../firebase';
 import { signOut } from 'firebase/auth';
+import DocumentList from './DocumentList';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -42,6 +43,7 @@ const Sidebar = ({ isOpen }: SidebarProps) => {
           </li>
           {/* Add other nav items here */}
         </ul>
+        <DocumentList />
       </nav>
       {user && (
         <div>

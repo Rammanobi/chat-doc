@@ -2,10 +2,12 @@
 import { useState } from "react";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
-import { storage, db } from "../firebase"; // Use our centralized firebase instances
+import { storage, db } from "../firebase";
+import { useAuth } from "../contexts/AuthContext"; // Import the useAuth hook
 import { Paperclip, X } from "lucide-react";
 
 export default function UploadPopover() {
+  const { user } = useAuth(); // Get the current user
   const [open, setOpen] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -29,13 +31,19 @@ export default function UploadPopover() {
       },
       async () => {
         const url = await getDownloadURL(uploadTask.snapshot.ref);
-        await addDoc(collection(db, "documents"), {
-          fileName: file.name,
-          size: file.size,
-          url,
-          createdAt: serverTimestamp(),
-          status: "uploaded"
-        });
+        
+        // Add user's ID to the document data
+        if (user) {
+          await addDoc(collection(db, "documents"), {
+            userId: user.uid, // Tag with user's ID
+            fileName: file.name,
+            size: file.size,
+            url,
+            createdAt: serverTimestamp(),
+            status: "uploaded"
+          });
+        }
+
         setUploading(false);
         setOpen(false); // close popover after upload
       }

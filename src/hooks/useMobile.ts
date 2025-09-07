@@ -17,3 +17,4 @@ const useMobile = (query: string = '(max-width: 768px)') => {
 };
 
 export default useMobile;
+
