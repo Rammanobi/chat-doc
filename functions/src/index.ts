@@ -7,14 +7,19 @@ import {GoogleGenerativeAI} from "@google/generative-ai";
 initializeApp();
 const db = getFirestore();
 
-// Initialize Gemini AI
-const genAI = new GoogleGenerativeAI("AIzaSyCn7V4pYPXIvndmQ9M4m__65QH0Xrpufeg");
+// Initialize Gemini AI with environment variable
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
 
 /**
  * Cloud Function to handle document Q&A
  */
 export const askQuestion = onCall(async (request) => {
   const {question, userId, documentId} = request.data;
+
+  // Check if API key is available
+  if (!process.env.GEMINI_API_KEY) {
+    throw new Error("Gemini API key not configured");
+  }
 
   try {
     // 1. Get document from Firestore
@@ -95,4 +100,3 @@ async function findRelevantChunks(
   // In production, you'd use AI to find the most relevant ones
   return chunks.slice(0, 2);
 }
- 
